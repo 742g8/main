@@ -3,157 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Compromise</title>
+    <title>Sign in</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
     <style>
-        body {
+        :root {
+            --bg-color: #f1f3f4;
+            --card-bg: #fff;
+            --border-color: #dadce0;
+            --text-color: #202124;
+            --secondary-text: #5f6368;
+            --link-color: #1a73e8;
+            --link-hover: #1558b1;
+            --button-bg: #1a73e8;
+            --button-hover: #1669c1;
+            --font: 'Roboto', sans-serif;
+            --card-width: 360px;
+            --border-radius: 8px;
+            --transition: 0.2s;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            overflow: hidden;
-            background: black;
+            padding: 0;
         }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
+        html, body {
+            width: 100%;
+            height: 100%;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+        body {
+            font-family: var(--font);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 16px 10px;
+        }
+
+        .card {
+            width: 480px;
+            height: 550px;
+           
+            margin: auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .logo {
+            width: 70px;
+            margin-bottom: 18px;
+            display: block;
+            
+            margin-right: auto;
+            margin-left: -10px;
+        }
+
+        h1 {
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 8px;
+            text-align: left;
+            font-weight: lighter;
+        }
+        #left-panel-subtitle { 
+            text-align: left; 
+            font-size: 16px; ;
+            padding-top: 10px;
+            padding-bottom: 30px;
+            }
+        .step-container {
+            display: none;
+        }
+
+        .step-container.active {
+            display: block;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: 1px  color#faf8f8;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--link-color);
+            
+        }
+
+        a {
+            font-size: 14px;
+            color: var(--link-color);
+            text-decoration: none;
+            margin-bottom: 16px;
+            transition: color var(--transition) ease;
+        }
+
+        a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+        }
+
+        .info {
+            font-size: 14px;
+            color: var(--secondary-text);
+            line-height: 1.4;
+            margin-bottom: 26px;
+            margin-top: 26px;
+
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+        }
+
+        .btn-text {
+            color: #1a73e8;
+            border: none;
+           background-color: #fff;
+            font-size: 14px;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background var(--transition) ease;
+          
+        }
+
+        .btn-text:hover {
+            background-color: #f1f3f4;
+            
+        }
+
+        .btn-primary {
+            background: var(--button-bg);
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background var(--transition) ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--button-hover);
+        }
+
+        footer {
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--secondary-text);
+        }
+
+        footer a {
+            color: var(--secondary-text);
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #fff;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .overlay-message {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .overlay-message h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .overlay-message p {
+            font-size: 14px;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
+    <div class="card">
+        <img src="logo.png" alt="Google Logo" class="logo">
+        <h1 id="left-panel-heading">Sign in</h1>
+        <p id="left-panel-subtitle" >
+            with your Google Account. This account will be available to other Google apps in the browser.
+        </p>
+
+        <div class="step-container active" id="step-email">
+            <form id="email-form">
+                <input type="email" id="email-input" placeholder="Email or phone" required>
+                <a href="#">Forgot email?</a>
+                <p class="info">
+                    Not your computer? Use Guest mode to sign in privately.
+                    <a href="#">Learn more</a>
+                </p>
+                <div class="buttons">
+                    <button type="button" class="btn-text">Create account</button>
+                    <button type="submit" class="btn-primary" id="next-email-btn">Next</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="step-container" id="step-password">
+            <form id="password-form">
+                <input type="password" id="password-input" placeholder="Enter your password" required>
+                <div>
+                    <input type="checkbox" id="toggle-pw">
+                    <label for="toggle-pw" style="font-size: 14px;">Show password</label>
+                </div>
+                <a href="#">Forgot password?</a>
+                <div class="buttons">
+                    <button type="button" class="btn-text" id="back-to-email">Back</button>
+                    <button type="submit" class="btn-primary" id="next-password-btn">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <a href="#">Help</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+    </footer>
+
+    <div class="overlay" id="final-overlay">
+        <div class="overlay-message">
+            <h2>Security Reminder</h2>
+            <p>
+                This page is not an official sign-in form. It’s for educational purposes only. 
+                No data is being stored or transmitted. Always check the URL and SSL certificate before entering credentials.
+            </p>
+        </div>
+    </div>
+
     <script>
-        // Create the Matrix background canvas
-        const matrixCanvas = document.createElement('canvas');
-        matrixCanvas.width = window.innerWidth;
-        matrixCanvas.height = window.innerHeight;
-        matrixCanvas.style.position = 'fixed';
-        matrixCanvas.style.top = '0';
-        matrixCanvas.style.left = '0';
-        matrixCanvas.style.zIndex = '9998';
-        document.body.appendChild(matrixCanvas);
+        const leftPanelHeading = document.getElementById("left-panel-heading");
+        const leftPanelSubtitle = document.getElementById("left-panel-subtitle");
+        
+        const stepEmail = document.getElementById("step-email");
+        const stepPassword = document.getElementById("step-password");
+        const emailInput = document.getElementById("email-input");
+        const emailForm = document.getElementById("email-form");
+        const passwordForm = document.getElementById("password-form");
+        const togglePw = document.getElementById("toggle-pw");
+        const passwordInput = document.getElementById("password-input");
+        const backToEmailBtn = document.getElementById("back-to-email");
+        const finalOverlay = document.getElementById("final-overlay");
 
-        const ctx = matrixCanvas.getContext('2d');
-        const letters = Array(256).join(1).split('');
-        setInterval(() => {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-            ctx.fillStyle = '#0F0';
-            letters.forEach((y, i) => {
-                const text = String.fromCharCode(65 + Math.random() * 33);
-                const x = i * 10;
-                ctx.fillText(text, x, y);
-                letters[i] = y > matrixCanvas.height || Math.random() > 0.95 ? 0 : y + 10;
-            });
-        }, 50);
+        emailForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const typedEmail = emailInput.value.trim();
+            leftPanelHeading.textContent = "Welcome";
+            leftPanelSubtitle.textContent = typedEmail || "No Email Entered";
+            stepEmail.classList.remove("active");
+            stepPassword.classList.add("active");
+        });
 
-        // Create the hacker terminal overlay
-        const hackerDiv = document.createElement('div');
-        hackerDiv.style.position = 'fixed';
-        hackerDiv.style.top = '10px';
-        hackerDiv.style.left = '10px';
-        hackerDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-        hackerDiv.style.color = 'green';
-        hackerDiv.style.fontFamily = 'monospace';
-        hackerDiv.style.padding = '20px';
-        hackerDiv.style.zIndex = '10000';
-        hackerDiv.style.width = '80%';
-        hackerDiv.style.height = '80%';
-        hackerDiv.style.overflowY = 'scroll';
-        hackerDiv.style.border = '2px solid green';
-        hackerDiv.style.boxShadow = '0 0 20px green';
-        hackerDiv.style.borderRadius = '10px';
-        document.body.appendChild(hackerDiv);
+        passwordForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            finalOverlay.classList.add("active");
+        });
 
-        const fakeText = [
-            "Initializing system compromise...",
-            "Accessing restricted data...",
-            "Targeting critical infrastructure...",
-            "Injecting ransomware...",
-            "Encrypting all local drives...",
-            "Corrupting master boot record...",
-            "Disabling network firewalls...",
-            "Downloading classified system logs...",
-            "Uploading unauthorized scripts...",
-            "Overwriting system kernel...",
-            "Injecting advanced persistent threat...",
-            "Deleting system backups...",
-            "Exfiltrating personal credentials...",
-            "Spoofing system IP address...",
-            "Compromise nearing completion...",
-            "Finalizing malicious payload deployment...",
-            "Critical system failure detected.",
-            "Emergency shutdown protocols overridden.",
-            "All system safeguards disabled.",
-            "Compromise complete. Full control established."
-        ];
-        let i = 0;
+        togglePw.addEventListener("change", function() {
+            passwordInput.type = this.checked ? "text" : "password";
+        });
 
-        // Type effect in the terminal
-        const typingInterval = setInterval(() => {
-            if (i < fakeText.length) {
-                hackerDiv.textContent += fakeText[i] + '\n';
-                hackerDiv.scrollTop = hackerDiv.scrollHeight; // Auto-scroll to bottom
-                i++;
-            } else {
-                hackerDiv.textContent += "> SYSTEM OVERRIDE COMPLETE.";
-                clearInterval(typingInterval);
-            }
-        }, 1000);
-
-        // Add flashing cursor effect to the terminal
-        const cursor = document.createElement('span');
-        cursor.textContent = '█';
-        cursor.style.animation = 'blink 1s infinite';
-        hackerDiv.appendChild(cursor);
-
-        // Play sound effects
-        const audio = new Audio("https://freesound.org/data/previews/256/256113_4486188-lq.mp3");
-        audio.loop = true;
-        audio.play();
-
-        // Add dimming effect towards the end
-        setTimeout(() => {
-            const dimEffect = document.createElement('div');
-            dimEffect.style.position = 'fixed';
-            dimEffect.style.top = '0';
-            dimEffect.style.left = '0';
-            dimEffect.style.width = '100%';
-            dimEffect.style.height = '100%';
-            dimEffect.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-            dimEffect.style.zIndex = '9999';
-            dimEffect.style.pointerEvents = 'none';
-            dimEffect.style.transition = 'background-color 5s ease';
-            document.body.appendChild(dimEffect);
-        }, 20000);
-
-        // Add a fake "shutdown" effect after the sequence completes
-        setTimeout(() => {
-            const shutdownDiv = document.createElement('div');
-            shutdownDiv.style.position = 'fixed';
-            shutdownDiv.style.top = '0';
-            shutdownDiv.style.left = '0';
-            shutdownDiv.style.width = '100%';
-            shutdownDiv.style.height = '100%';
-            shutdownDiv.style.backgroundColor = 'black';
-            shutdownDiv.style.color = 'white';
-            shutdownDiv.style.display = 'flex';
-            shutdownDiv.style.alignItems = 'center';
-            shutdownDiv.style.justifyContent = 'center';
-            shutdownDiv.style.fontSize = '2rem';
-            shutdownDiv.style.fontFamily = 'monospace';
-            shutdownDiv.style.zIndex = '10002';
-            shutdownDiv.textContent = "System Shutdown... Goodbye.";
-            document.body.appendChild(shutdownDiv);
-
-            // Fade out the screen
-            setTimeout(() => {
-                shutdownDiv.style.opacity = '0';
-                shutdownDiv.style.transition = 'opacity 2s ease';
-            }, 2000);
-        }, 30000);
+        backToEmailBtn.addEventListener("click", function() {
+            leftPanelHeading.textContent = "Sign in";
+            leftPanelSubtitle.textContent = "Use your Google Account.";
+            stepPassword.classList.remove("active");
+            stepEmail.classList.add("active");
+        });
     </script>
 </body>
 </html>
