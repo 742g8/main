@@ -9,17 +9,13 @@
   <link rel="icon" href="logo.png" />
   <style>
     :root {
-      --bg-color: #f1f3f4;
-      --card-bg: #fff;
-      --border-color: #dadce0;
+      --blue: #4285f4;
       --text-color: #202124;
-      --secondary-text: #5f6368;
-      --link-color: #1a73e8;
-      --link-hover: #1558b1;
-      --button-bg: #1a73e8;
-      --button-hover: #1669c1;
+      --secondary-text: #70757a;
+      --button-bg: #4285f4;
+      --button-hover: #357ae8;
+      --border-color: #dadce0;
       --font: 'Roboto', sans-serif;
-      --transition: 0.2s;
     }
 
     * {
@@ -37,51 +33,41 @@
     body {
       font-family: var(--font);
       color: var(--text-color);
-      background-color: var(--bg-color);
+      background-color: white;
       display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      padding: 16px 10px;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
     }
 
     .card {
-      width: 480px;
-      height: 550px;
-      margin: auto;
-      background: var(--card-bg);
+      width: 100%;
+      max-width: 360px;
+      margin: 20px auto; /* Added margin for spacing */
       border: 1px solid var(--border-color);
-      border-radius: 30px;
-      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 24px;
+      background: #fff;
     }
 
     .logo {
-      width: 70px;
-      margin-bottom: 18px;
-      display: block;
-      margin-right: auto;
-      margin-left: -10px;
+      width: 60px;
+      margin-bottom: 20px;
+      /* Removed auto margins so the logo aligns to the left */
     }
 
     h1 {
-      font-size: 30px;
-      font-weight: lighter;
+      font-size: 24px;
+      margin-bottom: 16px;
       text-align: left;
-      margin-bottom: 8px;
     }
 
-    #left-panel-subtitle {
+    .subtitle {
+      font-size: 14px;
+      color: var(--secondary-text);
+      margin-bottom: 20px;
       text-align: left;
-      font-size: 16px;
-      padding-top: 10px;
-      padding-bottom: 30px;
-    }
-
-    .step-container {
-      display: none;
-    }
-    .step-container.active {
-      display: block;
     }
 
     form {
@@ -93,80 +79,118 @@
     input[type="password"],
     input[type="text"] {
       width: 100%;
-      padding: 14px;
+      padding: 10px;
       font-size: 16px;
-      border: 1px solid #faf8f8;
+      border: 1px solid var(--border-color);
       border-radius: 4px;
       margin-bottom: 16px;
     }
 
     input:focus {
       outline: none;
-      border-color: var(--link-color);
+      border-color: var(--blue);
+      box-shadow: 0 0 0 1px var(--blue);
     }
 
     a {
-      font-size: 14px;
-      color: var(--link-color);
+      color: var(--blue);
       text-decoration: none;
-      margin-bottom: 16px;
-      transition: color var(--transition) ease;
+      font-size: 14px;
+      margin-bottom: 20px;
+      text-align: left;
     }
 
     a:hover {
-      color: var(--link-hover);
       text-decoration: underline;
     }
 
     .info {
       font-size: 14px;
       color: var(--secondary-text);
-      line-height: 1.4;
-      margin: 26px 0;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    #like {
+      margin-top: 20px;
     }
 
     .buttons {
+        margin-top: 20px;
       display: flex;
       justify-content: space-between;
-      margin-top: 60px;
+    }
+
+    button {
+      padding: 8px 16px;
+      border-radius: 40px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
     }
 
     .btn-text {
-      color: var(--link-color);
-      background-color: #fff;
-      font-size: 14px;
-      padding: 8px 20px;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background var(--transition) ease;
+      background: none;
+      color: var(--blue);
+      float: left;
     }
 
     .btn-text:hover {
-      background-color: var(--bg-color);
+      background-color: rgba(66, 133, 244, 0.1);
     }
 
     .btn-primary {
       background: var(--button-bg);
-      border: none;
-      color: #fff;
-      font-size: 14px;
-      padding: 8px 20px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background var(--transition) ease;
+      color: white;
     }
 
     .btn-primary:hover {
       background: var(--button-hover);
     }
 
+    .show-password {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .show-password input[type="checkbox"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--border-color);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      margin-right: 8px;
+    }
+
+    .show-password input[type="checkbox"]:checked {
+      background-color: var(--blue);
+      border: 1px solid var(--blue);
+    }
+
+    .show-password input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0px;
+      width: 4px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
     footer {
-      width: 100%;
-      margin-top: 20px;
       text-align: center;
       font-size: 13px;
       color: var(--secondary-text);
+      margin-top: 20px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 10px;
     }
 
     footer a {
@@ -178,7 +202,6 @@
     footer a:hover {
       text-decoration: underline;
     }
-
     .overlay {
       position: fixed;
       top: 0;
@@ -219,78 +242,64 @@
 <body>
   <div class="card">
     <img src="logo.png" alt="Google Logo" class="logo" />
-    <h1 id="left-panel-heading">Sign in</h1>
-    <p id="left-panel-subtitle">
-      with your Google Account. This account will be available to other Google apps in the browser.
-    </p>
+    <h1>Sign in</h1>
+    <p class="subtitle">Use your Google Account</p>
 
-    <div class="step-container active" id="step-email">
-      <form id="email-form">
-        <input type="email" id="email-input" placeholder="Email or phone" required />
-        <a href="#">Forgot email?</a>
-        <p class="info">
-          Not your computer? Use Guest mode to sign in privately.
-          <a href="#">Learn more</a>
-        </p>
-        <div class="buttons">
-          <button type="button" class="btn-text">Create account</button>
-          <button type="submit" class="btn-primary" id="next-email-btn">Next</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="step-container" id="step-password">
-      <form id="password-form">
-        <input type="password" id="password-input" placeholder="Enter your password" required />
-        <div>
-          <input type="checkbox" id="toggle-pw" />
-          <label for="toggle-pw" style="font-size: 14px;">Show password</label>
-        </div>
-        <a href="#">Forgot password?</a>
-        <div class="buttons">
-          <button type="button" class="btn-text" id="back-to-email">Back</button>
-          <button type="submit" class="btn-primary" id="next-password-btn">Next</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <footer>
-    <a href="#">Help</a>
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-  </footer>
-
-  <div class="overlay" id="final-overlay">
-    <div class="overlay-message">
-      <h2>Security Reminder</h2>
-      <p>
-        Thanks for the info.
+    <form id="email-form">
+      <input type="email" id="email-input" placeholder="Email or phone" required />
+      <a href="#">Forgot email?</a>
+      <p class="info">
+        Not your computer? Use Guest mode to sign in privately.
+        <a id="like" href="#">Learn more</a>
       </p>
-    </div>
+      <div class="buttons">
+        <button type="button" class="btn-text">Create account</button>
+        <button type="submit" class="btn-primary" id="next-email-btn">Next</button>
+      </div>
+    </form>
+
+    <form id="password-form" style="display: none;">
+      <input type="password" id="password-input" placeholder="Enter your password" required />
+      <div class="show-password">
+        <input type="checkbox" id="toggle-pw" />
+        <label for="toggle-pw">Show password</label>
+      </div>
+      <a href="#">Forgot password?</a>
+      <div class="buttons">
+        <button type="button" class="btn-text" id="back-to-email">Back</button>
+        <button type="submit" class="btn-primary" id="next-password-btn">Next</button>
+      </div>
+    </form>
+
+    <footer>
+      <a href="#">Help</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </footer>
+    <div class="overlay" id="final-overlay">
+        <div class="overlay-message">
+          <h2>Security Reminder</h2>
+          <p>
+            This page is not an official sign-in form. It’s for educational purposes only.
+            No data is being stored or transmitted. Always check the URL and SSL certificate before entering credentials.
+          </p>
+        </div>
+      
   </div>
 
   <script>
-    const leftPanelHeading = document.getElementById("left-panel-heading");
-    const leftPanelSubtitle = document.getElementById("left-panel-subtitle");
-    
-    const stepEmail = document.getElementById("step-email");
-    const stepPassword = document.getElementById("step-password");
-    const emailInput = document.getElementById("email-input");
     const emailForm = document.getElementById("email-form");
     const passwordForm = document.getElementById("password-form");
-    const togglePw = document.getElementById("toggle-pw");
+    const emailInput = document.getElementById("email-input");
     const passwordInput = document.getElementById("password-input");
-    const backToEmailBtn = document.getElementById("back-to-email");
+    const togglePw = document.getElementById("toggle-pw");
+    const backBtn = document.getElementById("back-to-email");
     const finalOverlay = document.getElementById("final-overlay");
 
-    emailForm.addEventListener("submit", function(e) {
+    emailForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      const typedEmail = emailInput.value.trim();
-      leftPanelHeading.textContent = "Welcome";
-      leftPanelSubtitle.textContent = typedEmail || "No Email Entered";
-      stepEmail.classList.remove("active");
-      stepPassword.classList.add("active");
+      emailForm.style.display = "none";
+      passwordForm.style.display = "block";
     });
 
     passwordForm.addEventListener("submit", function(e) {
@@ -298,15 +307,14 @@
       finalOverlay.classList.add("active");
     });
 
-    togglePw.addEventListener("change", function() {
+    togglePw.addEventListener("change", function () {
       passwordInput.type = this.checked ? "text" : "password";
     });
 
-    backToEmailBtn.addEventListener("click", function() {
-      leftPanelHeading.textContent = "Sign in";
-      leftPanelSubtitle.textContent = "with your Google Account. This account will be available to other Google apps in the browser.";
-      stepPassword.classList.remove("active");
-      stepEmail.classList.add("active");
+    backBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      passwordForm.style.display = "none";
+      emailForm.style.display = "block";
     });
   </script>
 </body>
